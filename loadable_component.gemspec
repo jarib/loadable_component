@@ -7,9 +7,9 @@ Gem::Specification.new do |s|
   s.version     = LoadableComponent::VERSION
   s.authors     = ["Jari Bakken"]
   s.email       = ["jari.bakken@gmail.com"]
-  s.homepage    = ""
-  s.summary     = %q{Simple Ruby version of http://code.google.com/p/selenium/wiki/LoadableComponent}
-  s.description = %q{Simple Ruby version of http://code.google.com/p/selenium/wiki/LoadableComponent}
+  s.homepage    = "http://github.com/jarib/loadable_component"
+  s.summary     = %q{Ruby implementation of http://code.google.com/p/selenium/wiki/LoadableComponent}
+  s.description = %q{Ruby implementation of http://code.google.com/p/selenium/wiki/LoadableComponent}
 
   s.rubyforge_project = "loadable_component"
 
