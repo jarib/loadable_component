@@ -47,6 +47,8 @@ class SlowLoadableComponent < LoadableComponent
       return self
     end
 
+    load
+
     end_time = Time.now + @timeout
     until Time.now >= end_time
       return self if loaded?

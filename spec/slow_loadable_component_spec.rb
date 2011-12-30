@@ -6,16 +6,15 @@ describe SlowLoadableComponent do
     SlowlyDetonatingComponent.new.get.should be_instance_of(SlowlyDetonatingComponent)
   end
 
-  it "calls the load method if the component is not already loaded" do
-    number_of_times_through_loop = 1
-    component = SlowLoading.new(number_of_times_through_loop).get
+  it "calls #load if the component is not already loaded" do
+    component = SlowLoading.new.get
     component.should be_instance_of(SlowLoading)
 
-    component.loop_count.should == number_of_times_through_loop
+    component.load_called.should be_true
   end
 
   it "calls the load method once if the component takes a long time to load" do
-    OnlyOneLoad.new(5).get
+    OnlyOneLoad.new.get
   end
 
   it "should throw an error if calling load does not cause the component to load before timeout" do

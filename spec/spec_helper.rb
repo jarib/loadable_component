@@ -55,40 +55,31 @@ class SlowlyDetonatingComponent < SlowLoadableComponent
 end
 
 class SlowLoading < SlowLoadableComponent
-  attr_reader :loop_count
+  attr_reader :load_called
 
-  def initialize(count)
-    @count = count
-    @loop_count = 0
+  def initialize
+    @load_called = false
 
     super(1)
   end
 
   def load
-    # does nothing
+    @load_called = true
   end
 
   def loaded?
-    if @loop_count > @count
-      false
-    else
-      @loop_count += 1
-    end
+    @load_called
   end
 end
 
 class OnlyOneLoad < SlowLoading
-  def initialize(count)
-    super(count)
-    @load_called = false
-  end
 
   def load
     if @load_called
       raise "load already called"
     end
 
-    @load_called = true
+    super
   end
 end
 
