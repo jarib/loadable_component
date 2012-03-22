@@ -1,3 +1,3 @@
-class LoadableComponent
+module LoadableComponent
   VERSION = "0.0.3"
 end

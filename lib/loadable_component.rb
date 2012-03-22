@@ -6,7 +6,7 @@ require "loadable_component/version"
 #   http://code.google.com/p/selenium/wiki/LoadableComponent
 #
 
-class LoadableComponent
+module LoadableComponent
 
   class UnableToLoadComponent < StandardError; end
   class SubclassResponsibility < StandardError; end
@@ -37,10 +37,9 @@ class LoadableComponent
 
 end
 
-class SlowLoadableComponent < LoadableComponent
-  def initialize(timeout)
-    @timeout = timeout
-  end
+module SlowLoadableComponent
+  include LoadableComponent
+  attr_accessor :timeout
 
   def get
     if loaded?
@@ -49,7 +48,9 @@ class SlowLoadableComponent < LoadableComponent
 
     load
 
-    end_time = Time.now + @timeout
+    end_time = Time.now
+    end_time += @timeout if @timeout
+
     until Time.now >= end_time
       return self if loaded?
       check_error

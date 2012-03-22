@@ -2,7 +2,9 @@ require 'rspec'
 require 'loadable_component'
 require 'timecop'
 
-class DetonatingComponent < LoadableComponent
+class DetonatingComponent
+  include LoadableComponent
+
   def load
     raise "should never be called"
   end
@@ -13,7 +15,9 @@ class DetonatingComponent < LoadableComponent
   end
 end
 
-class LoadsOk < LoadableComponent
+class LoadsOk
+  include LoadableComponent
+
   def initialize(second_load_call_passes)
     @second_load_call_passes = second_load_call_passes
     @load_called = false
@@ -40,9 +44,11 @@ class LoadsOk < LoadableComponent
   end
 end
 
-class SlowlyDetonatingComponent < SlowLoadableComponent
+class SlowlyDetonatingComponent
+  include SlowLoadableComponent
+
   def initialize
-    super(1)
+    @timeout = 1
   end
 
   def load
@@ -54,13 +60,14 @@ class SlowlyDetonatingComponent < SlowLoadableComponent
   end
 end
 
-class SlowLoading < SlowLoadableComponent
+class SlowLoading
+  include SlowLoadableComponent
+
   attr_reader :load_called
 
   def initialize
     @load_called = false
-
-    super(1)
+    @timeout = 1
   end
 
   def load
@@ -83,7 +90,13 @@ class OnlyOneLoad < SlowLoading
   end
 end
 
-class BasicSlowLoader < SlowLoadableComponent
+class BasicSlowLoader
+  include SlowLoadableComponent
+
+  def initialize(timeout)
+    @timeout = timeout
+  end
+
   def load
     # does nothing
   end
@@ -94,8 +107,13 @@ class BasicSlowLoader < SlowLoadableComponent
   end
 end
 
-class HasError < SlowLoadableComponent
+class HasError
+  include SlowLoadableComponent
   class CustomError < StandardError; end
+
+  def initialize(timeout)
+    @timeout = timeout
+  end
 
   def load
     # does nothing
